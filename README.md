@@ -34,6 +34,13 @@ with rewrite_step("Custom title"):  # ✅ Rewrites!
 Result in Allure:
 ✓ Custom title  # No nesting!
 ```
+## 📋 Requirements
+
+- Python 3.8+
+- allure-pytest >= 2.9.0 (installed automatically)
+
+**Note:** `allure-pytest` is a required dependency and will be installed automatically when you install `allure-step-rewriter`.
+
 ## 🚀 Installation
 ```bash
 pip install allure-step-rewriter
