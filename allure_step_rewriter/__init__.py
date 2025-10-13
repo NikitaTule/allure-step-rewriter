@@ -17,8 +17,14 @@ Basic usage:
 For more information, see: https://github.com/NikitaTule/allure-step-rewriter
 """
 
+from allure_step_rewriter.rewrite_step import (
+    rewrite_step,
+    AllureStepWrapper,
+)
 from allure_step_rewriter.version import __version__
 
 __all__ = [
+    "rewrite_step",
+    "AllureStepWrapper",
     "__version__",
 ]
