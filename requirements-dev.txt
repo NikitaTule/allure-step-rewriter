@@ -1,0 +1,11 @@
+-r requirements.txt
+
+# Testing
+pytest>=7.0.0
+pytest-cov>=3.0.0
+
+# Code quality
+black>=22.0.0
+ruff>=0.1.0
+mypy>=1.0.0
+pre-commit>=3.0.0
