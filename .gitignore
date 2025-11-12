@@ -73,3 +73,14 @@ dmypy.json
 
 # Environments
 .env
+
+# Internal documentation
+.claude/
+ARCHITECTURE_PROPOSAL.md
+CHANGELOG_MULTIPLE_OVERRIDES.md
+PUBLISHING_GUIDE.md
+RELEASE_CHECKLIST.md
+SOLUTION_ANALYSIS.md
+test_exact_scenario.py
+test_nesting_scenarios.py
+test_real_structure.py
