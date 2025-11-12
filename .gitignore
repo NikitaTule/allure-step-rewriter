@@ -37,6 +37,7 @@ htmlcov/
 .nox/
 .coverage
 .coverage.*
+coverage.json
 .cache
 nosetests.xml
 coverage.xml
@@ -46,6 +47,11 @@ coverage.xml
 .pytest_cache/
 allure-results/
 allure-report/
+allure-*/
+
+# Test files in root (should be in tests/ directory)
+/test_*.py
+/analyze_*.py
 
 # Virtual environments
 venv/
@@ -75,7 +81,6 @@ dmypy.json
 .env
 
 # Internal documentation
-.claude/
 ARCHITECTURE_PROPOSAL.md
 CHANGELOG_MULTIPLE_OVERRIDES.md
 PUBLISHING_GUIDE.md

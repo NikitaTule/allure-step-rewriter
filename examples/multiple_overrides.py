@@ -1,5 +1,8 @@
 """
-Multiple overrides example - demonstrating unlimited overrides in single context
+Multiple overrides example - demonstrating allow_multiple=True for unlimited overrides
+
+With allow_multiple=True, all decorated functions inside the context will be
+overridden to the context title, creating a single step in Allure report.
 
 Run with: pytest examples/multiple_overrides.py --alluredir=allure-results
 View report: allure serve allure-results
@@ -50,10 +53,11 @@ def test_multiple_overrides_single_context():
     """
     Test that multiple decorated functions can be overridden in single context.
 
+    Using allow_multiple=True allows overriding all functions.
     Result: Only ONE step "User Registration Flow" in Allure report.
     All function calls are "collapsed" into this single step.
     """
-    with rewrite_step("User Registration Flow"):
+    with rewrite_step("User Registration Flow", allow_multiple=True):
         open_browser()
         navigate("https://example.com/register")
         fill_field("username", "john_doe")
@@ -84,8 +88,8 @@ def test_api_test_scenario():
         print(f"Validating: {response}")
         return response["status"] < 400
 
-    # All API calls collapsed into one step
-    with rewrite_step("API Test: Create and retrieve user"):
+    # All API calls collapsed into one step (allow_multiple=True)
+    with rewrite_step("API Test: Create and retrieve user", allow_multiple=True):
         response1 = post_request("/api/users", {"name": "John"})
         assert validate(response1)
 
@@ -116,14 +120,14 @@ def test_sequential_contexts_with_overrides():
         print("Teardown")
         return True
 
-    # First context
-    with rewrite_step("Test Case 1"):
+    # First context (allow_multiple=True for multiple overrides)
+    with rewrite_step("Test Case 1", allow_multiple=True):
         setup()
         execute()
         teardown()
 
     # Second context
-    with rewrite_step("Test Case 2"):
+    with rewrite_step("Test Case 2", allow_multiple=True):
         setup()
         execute()
         teardown()
@@ -160,21 +164,21 @@ def test_real_world_example_e2e():
         print(f"Assert: {condition}")
         return True
 
-    # Setup
-    with rewrite_step("Setup Test Environment"):
+    # Setup (allow_multiple=True)
+    with rewrite_step("Setup Test Environment", allow_multiple=True):
         driver = init_driver()
         assert login("admin", "password")
         goto("dashboard")
 
     # Test execution
-    with rewrite_step("Execute Test Steps"):
+    with rewrite_step("Execute Test Steps", allow_multiple=True):
         goto("users")
         action("Create new user")
         action("Assign role")
         action("Save changes")
 
     # Verification
-    with rewrite_step("Verify Results"):
+    with rewrite_step("Verify Results", allow_multiple=True):
         goto("users/list")
         assert_that("User appears in list")
         assert_that("Role is correct")

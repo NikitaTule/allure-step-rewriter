@@ -23,7 +23,8 @@ class TestMultipleOverrides:
         def func_c():
             return "C"
 
-        with rewrite_step("Parent Step"):
+        # Use allow_multiple=True to override all three functions
+        with rewrite_step("Parent Step", allow_multiple=True):
             result_a = func_a()
             result_b = func_b()
             result_c = func_c()
@@ -43,7 +44,8 @@ class TestMultipleOverrides:
         def func_b():
             return "B"
 
-        with rewrite_step("Parent Step"):
+        # Use allow_multiple=True to override multiple calls
+        with rewrite_step("Parent Step", allow_multiple=True):
             result_a = func_a()  # Should override to "Parent Step"
 
             # Create nested step using allure.step

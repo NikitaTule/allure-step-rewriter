@@ -8,10 +8,53 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
-- CI/CD with GitHub Actions
-- Pre-commit hooks configuration
 - Integration tests with real Allure reports
-- Type hints improvements (full mypy compliance)
+- Full mypy compliance with strict mode
+
+---
+
+## [0.2.1] - 2025-11-13
+
+### Added
+- **CI/CD Pipeline**: GitHub Actions workflow for automated testing
+  - Tests run on Ubuntu, Windows, and macOS
+  - Python versions 3.8-3.12 tested
+  - Code coverage reporting to Codecov
+  - Linting and formatting checks
+  - Package build verification
+- **Pre-commit hooks**: Automated code quality checks
+  - Black formatting
+  - Ruff linting
+  - Type checking with mypy
+  - Security checks with Bandit
+  - Docstring validation
+- **Contributing Guide**: Comprehensive CONTRIBUTING.md
+  - Development setup instructions
+  - Code style guidelines
+  - PR process documentation
+  - Testing guidelines
+- **Extensive test suite improvements**:
+  - 49 unit tests (increased from 18)
+  - 85% code coverage (increased from 43%)
+  - Import error tests
+  - Error handling tests
+  - Edge case tests
+  - Thread safety tests
+
+### Changed
+- Improved .gitignore to exclude test artifacts
+- Enhanced documentation structure
+
+### Removed
+- Unused `exceptions.py` module
+- Unused `rewrite_step_v2.py` draft file
+- Test files from project root (moved to tests/ directory)
+
+### Technical Details
+- Coverage: 85% (improved from 43%)
+- Tests: 49 passing (improved from 18)
+- CI/CD: Full automation with GitHub Actions
+- Code quality: Automated linting and formatting
 
 ---
 
