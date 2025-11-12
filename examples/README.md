@@ -1,42 +1,42 @@
 # Examples - allure-step-rewriter
 
-Эта директория содержит примеры использования `allure-step-rewriter`.
+This directory contains usage examples for `allure-step-rewriter`.
 
-## Запуск примеров
+## Running Examples
 
-### Установка зависимостей
+### Install Dependencies
 
 ```bash
 pip install allure-step-rewriter[allure]
 pip install pytest
 ```
 
-### Запуск примеров
+### Run Examples
 
 ```bash
-# Запустить все примеры
+# Run all examples
 pytest examples/ -v
 
-# Запустить конкретный пример
+# Run specific example
 pytest examples/basic_usage.py -v
 
-# Сгенерировать Allure отчет
+# Generate Allure report
 pytest examples/ --alluredir=allure-results
 allure serve allure-results
 ```
 
-## Описание примеров
+## Examples Description
 
-### 1. `basic_usage.py` - Базовое использование
+### 1. `basic_usage.py` - Basic Usage
 
-**Что демонстрирует:**
-- Использование `@rewrite_step` как декоратор
-- Динамическое переопределение title с `step_title`
-- Использование `with rewrite_step()` как контекстный менеджер
-- Декоратор без скобок (использует имя функции)
-- Группировка нескольких действий в один шаг
+**Demonstrates:**
+- Using `@rewrite_step` as a decorator
+- Dynamic title override with `step_title`
+- Using `with rewrite_step()` as a context manager
+- Decorator without parentheses (uses function name)
+- Grouping multiple actions into one step
 
-**Ключевые примеры:**
+**Key Examples:**
 ```python
 @rewrite_step("Get user data")
 def get_user_data(user_id):
@@ -52,75 +52,75 @@ with rewrite_step("Custom step"):
 
 ---
 
-### 2. `multiple_overrides.py` - Множественное переопределение
+### 2. `multiple_overrides.py` - Multiple Overrides
 
-**Что демонстрирует:**
-- Переопределение **неограниченного количества** шагов в одном контексте
-- Группировка сложных флоу в один логический шаг
-- Практические примеры E2E тестов
-- API тестирование с множественными запросами
+**Demonstrates:**
+- Overriding **unlimited number** of steps in single context
+- Grouping complex flows into one logical step
+- Practical E2E test examples
+- API testing with multiple requests
 
-**Ключевые примеры:**
+**Key Examples:**
 ```python
-with rewrite_step("User Registration Flow"):
+with rewrite_step("User Registration Flow", allow_multiple=True):
     open_browser()
     navigate("https://example.com/register")
     fill_field("username", "john")
     fill_field("email", "john@example.com")
     click_button("Register")
     close_browser()
-# Результат: ТОЛЬКО ОДИН шаг "User Registration Flow"
+# Result: ONLY ONE step "User Registration Flow"
 ```
 
-**Важно:** Все вложенные вызовы декорированных функций "схлопываются" в один шаг.
+**Important:** All nested calls to decorated functions are "collapsed" into one step.
 
 ---
 
-### 3. `nested_steps.py` - Вложенные шаги
+### 3. `nested_steps.py` - Nested Steps
 
-**Что демонстрирует:**
-- Комбинирование `rewrite_step` и `allure.step`
-- Создание иерархической структуры шагов
-- Когда использовать `rewrite_step` vs `allure.step`
-- Сложные многоуровневые структуры
+**Demonstrates:**
+- Combining `rewrite_step` and `allure.step`
+- Creating hierarchical step structure
+- When to use `rewrite_step` vs `allure.step`
+- Complex multi-level structures
 
-**Ключевые примеры:**
+**Key Examples:**
 ```python
 with rewrite_step("Test Scenario"):
-    api_call("/setup")  # Переопределяется
+    api_call("/setup")  # Gets overridden
 
-    # Создать вложенный шаг
+    # Create nested step
     with allure.step("Preparation"):
         api_call("/init")
 
     with allure.step("Execution"):
         api_call("/execute")
 
-# Результат:
+# Result:
 # ✓ Test Scenario
 #   ✓ Preparation
 #   ✓ Execution
 ```
 
-**Правила:**
-- `rewrite_step` контекст = схлопывает декорированные функции
-- `allure.step` внутри `rewrite_step` = создает вложенный шаг
-- `rewrite_step` внутри `rewrite_step` = **НЕ создает** вложенный шаг!
+**Rules:**
+- `rewrite_step` context = collapses decorated functions
+- `allure.step` inside `rewrite_step` = creates nested step
+- `rewrite_step` inside `rewrite_step` = **DOES NOT create** nested step!
 
 ---
 
-### 4. `pytest_integration.py` - Интеграция с pytest
+### 4. `pytest_integration.py` - Pytest Integration
 
-**Что демонстрирует:**
-- Использование с pytest fixtures
-- Параметризованные тесты (`@pytest.mark.parametrize`)
-- Pytest markers и Allure decorators
+**Demonstrates:**
+- Using with pytest fixtures
+- Parametrized tests (`@pytest.mark.parametrize`)
+- Pytest markers and Allure decorators
 - Session-scoped fixtures
-- Обработка исключений (`pytest.raises`)
-- Test classes и методы
-- Реальные сценарии использования
+- Exception handling (`pytest.raises`)
+- Test classes and methods
+- Real-world usage scenarios
 
-**Ключевые примеры:**
+**Key Examples:**
 ```python
 @pytest.fixture
 def browser():
@@ -139,63 +139,63 @@ def test_get_user(user_id):
 
 ---
 
-## Общие принципы
+## General Principles
 
-### Когда использовать `rewrite_step`
+### When to Use `rewrite_step`
 
-✅ **Используйте `rewrite_step` когда:**
-- Нужно сгруппировать несколько низкоуровневых операций в один логический шаг
-- Хотите избежать глубокой вложенности в Allure отчете
-- Нужно динамически изменять title шага
-- Множество однотипных операций нужно представить как одно действие
+✅ **Use `rewrite_step` when:**
+- Need to group multiple low-level operations into one logical step
+- Want to avoid deep nesting in Allure report
+- Need to dynamically change step title
+- Multiple similar operations should be represented as one action
 
-❌ **НЕ используйте `rewrite_step` когда:**
-- Нужна иерархическая структура шагов (используйте `allure.step`)
-- Каждый шаг важен и должен быть виден отдельно
-- Вложенные `with rewrite_step()` (не работает как переопределение!)
+❌ **DON'T use `rewrite_step` when:**
+- Need hierarchical step structure (use `allure.step`)
+- Each step is important and should be visible separately
+- Nested `with rewrite_step()` (doesn't work as override!)
 
-### Когда использовать `allure.step`
+### When to Use `allure.step`
 
-✅ **Используйте `allure.step` когда:**
-- Нужно создать вложенные шаги внутри `rewrite_step` контекста
-- Важна иерархическая структура (Given/When/Then)
-- Каждый шаг должен быть виден отдельно в отчете
+✅ **Use `allure.step` when:**
+- Need to create nested steps inside `rewrite_step` context
+- Hierarchical structure is important (Given/When/Then)
+- Each step should be visible separately in report
 
-### Комбинирование
+### Combining Both
 
-**Лучшая практика:**
+**Best Practice:**
 ```python
 with rewrite_step("Test Case"):
-    # Множественные низкоуровневые операции
+    # Multiple low-level operations
     setup_operation_1()
     setup_operation_2()
 
-    # Важный блок - вложенный шаг
+    # Important block - nested step
     with allure.step("Critical Section"):
         critical_operation()
 
-    # Снова множественные операции
+    # More low-level operations
     cleanup_operation_1()
     cleanup_operation_2()
 ```
 
 ---
 
-## Структура Allure отчетов
+## Allure Report Structure
 
-### Пример 1: Только `rewrite_step`
+### Example 1: Only `rewrite_step`
 ```python
 with rewrite_step("Parent"):
     func_a()
     func_b()
     func_c()
 ```
-**Результат:**
+**Result:**
 ```
 ✓ Parent
 ```
 
-### Пример 2: `rewrite_step` + `allure.step`
+### Example 2: `rewrite_step` + `allure.step`
 ```python
 with rewrite_step("Parent"):
     func_a()
@@ -203,40 +203,40 @@ with rewrite_step("Parent"):
         func_b()
     func_c()
 ```
-**Результат:**
+**Result:**
 ```
 ✓ Parent
   ✓ Child
 ```
 
-### Пример 3: Вложенные `rewrite_step` (НЕ РАБОТАЕТ!)
+### Example 3: Nested `rewrite_step` (DOESN'T WORK!)
 ```python
 with rewrite_step("Level 1"):
     with rewrite_step("Level 2"):
         func_a()
 ```
-**Результат:**
+**Result:**
 ```
 ✓ Level 1
-(Level 2 НЕ появляется!)
+(Level 2 does NOT appear!)
 ```
 
 ---
 
-## Советы по отладке
+## Debugging Tips
 
-1. **Включите verbose вывод pytest:**
+1. **Enable verbose pytest output:**
    ```bash
    pytest examples/basic_usage.py -v -s
    ```
 
-2. **Проверьте Allure отчет:**
+2. **Check Allure report:**
    ```bash
    pytest examples/ --alluredir=allure-results
    allure serve allure-results
    ```
 
-3. **Используйте print для отладки:**
+3. **Use print for debugging:**
    ```python
    @rewrite_step("My step")
    def my_func():
@@ -246,17 +246,17 @@ with rewrite_step("Level 1"):
 
 ---
 
-## Дополнительные ресурсы
+## Additional Resources
 
-- [Основной README](../README.md)
-- [GitHub репозиторий](https://github.com/NikitaTule/allure-step-rewriter)
-- [Документация Allure](https://docs.qameta.io/allure/)
-- [Документация pytest](https://docs.pytest.org/)
+- [Main README](../README.md)
+- [GitHub Repository](https://github.com/NikitaTule/allure-step-rewriter)
+- [Allure Documentation](https://docs.qameta.io/allure/)
+- [Pytest Documentation](https://docs.pytest.org/)
 
 ---
 
-## Контакты
+## Contact
 
-Если у вас есть вопросы или предложения по примерам:
+If you have questions or suggestions about examples:
 - GitHub Issues: https://github.com/NikitaTule/allure-step-rewriter/issues
 - Email: tulenckov.nikita@gmail.com
