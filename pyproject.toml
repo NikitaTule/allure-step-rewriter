@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "allure-step-rewriter"
-version = "0.1.0"
+version = "0.2.0"
 description = "Rewrite Allure step titles without nesting"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -28,18 +28,28 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
-dependencies = [
+dependencies = []
+
+[project.optional-dependencies]
+# For users who want to install allure-pytest automatically
+allure = [
     "allure-pytest>=2.9.0",
 ]
 
-[project.optional-dependencies]
+# For development
 dev = [
+    "allure-pytest>=2.9.0",
     "pytest>=7.0.0",
     "pytest-cov>=3.0.0",
     "black>=22.0.0",
     "ruff>=0.1.0",
     "mypy>=1.0.0",
     "pre-commit>=3.0.0",
+]
+
+# Install everything at once
+all = [
+    "allure-pytest>=2.9.0",
 ]
 
 [project.urls]

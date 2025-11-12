@@ -50,6 +50,7 @@ class TestRewriteStepContext:
             with rewrite_step("Step with error"):
                 raise ValueError("Test error")
 
+
     def test_multiple_sequential_contexts(self):
         """Test multiple sequential context managers."""
         with rewrite_step("Step 1"):

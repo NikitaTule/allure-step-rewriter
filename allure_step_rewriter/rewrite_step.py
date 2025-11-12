@@ -122,7 +122,6 @@ class AllureStepWrapper:
 
         # Override the step title
         external_context["title"] = step_title
-        external_context["can_override"] = False
         return True
 
     def __enter__(self) -> Any:
@@ -169,7 +168,6 @@ class AllureStepWrapper:
 
         # Override the title of the existing context
         external_context["title"] = self.desc
-        external_context["can_override"] = False
 
         # Store reference to the external context
         self.step_context = external_context["context"]
