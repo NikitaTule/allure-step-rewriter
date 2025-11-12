@@ -1,8 +1,6 @@
 """Tests for edge cases and corner scenarios."""
 
-import pytest
 import threading
-from unittest import mock
 from allure_step_rewriter import rewrite_step
 from allure_step_rewriter.rewrite_step import _active_step_contexts, _current_thread_id
 
