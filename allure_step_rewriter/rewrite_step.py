@@ -6,9 +6,8 @@ that allows overriding Allure step titles without creating nested steps.
 """
 
 import threading
-from contextlib import contextmanager
 from functools import wraps
-from typing import Any, Callable, Dict, Optional
+from typing import Any, Callable, Dict
 
 import allure
 

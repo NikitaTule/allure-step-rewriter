@@ -1,6 +1,5 @@
 """Tests for multiple step overrides in single context."""
 
-import pytest
 import allure
 from allure_step_rewriter import rewrite_step
 

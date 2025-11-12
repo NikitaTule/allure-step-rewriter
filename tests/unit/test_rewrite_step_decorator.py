@@ -1,6 +1,5 @@
 """Tests for rewrite_step used as a decorator."""
 
-import pytest
 from allure_step_rewriter import rewrite_step
 
 

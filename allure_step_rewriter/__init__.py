@@ -19,7 +19,7 @@ For more information, see: https://github.com/NikitaTule/allure-step-rewriter
 
 # Check that allure-pytest is installed
 try:
-    import allure
+    import allure  # noqa: F401
 except ImportError as e:
     raise ImportError(
         "allure-step-rewriter requires 'allure-pytest' to be installed.\n\n"
