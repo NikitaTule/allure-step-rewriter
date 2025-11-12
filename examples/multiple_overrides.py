@@ -166,7 +166,7 @@ def test_real_world_example_e2e():
 
     # Setup (allow_multiple=True)
     with rewrite_step("Setup Test Environment", allow_multiple=True):
-        driver = init_driver()
+        init_driver()
         assert login("admin", "password")
         goto("dashboard")
 
