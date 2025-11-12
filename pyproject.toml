@@ -61,6 +61,13 @@ Repository = "https://github.com/NikitaTule/allure-step-rewriter"
 [tool.setuptools]
 packages = ["allure_step_rewriter"]
 
+[tool.setuptools.package-data]
+allure_step_rewriter = ["py.typed"]
+
+# Exclude unnecessary files from distribution
+[tool.setuptools.exclude-package-data]
+"*" = ["tests", "tests.*", "examples", "examples.*"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
