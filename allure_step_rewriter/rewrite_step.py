@@ -22,7 +22,7 @@ def _current_thread_id() -> int:
     return threading.get_ident()
 
 
-def rewrite_step(title: str = "") -> "AllureStepWrapper":
+def rewrite_step(title: str = "", allow_multiple: bool = False) -> "AllureStepWrapper":
     """
     Create a step with the ability to override nested step titles.
 
@@ -30,6 +30,7 @@ def rewrite_step(title: str = "") -> "AllureStepWrapper":
 
     Args:
         title: Step title (optional)
+        allow_multiple: Allow multiple overrides in single context (default: False)
 
     Returns:
         AllureStepWrapper instance
@@ -44,6 +45,12 @@ def rewrite_step(title: str = "") -> "AllureStepWrapper":
             >>> with rewrite_step("Custom title"):
             >>>     my_function()
 
+        With multiple overrides:
+            >>> with rewrite_step("Parent", allow_multiple=True):
+            >>>     func_a()  # Overridden
+            >>>     func_b()  # Also overridden
+            >>>     func_c()  # Also overridden
+
         With step_title parameter:
             >>> @rewrite_step()
             >>> def my_function():
@@ -52,9 +59,9 @@ def rewrite_step(title: str = "") -> "AllureStepWrapper":
     """
     if callable(title):
         # Called as @rewrite_step without parentheses
-        return AllureStepWrapper(title.__name__)(title)
+        return AllureStepWrapper(title.__name__, allow_multiple)(title)
     else:
-        return AllureStepWrapper(title)
+        return AllureStepWrapper(title, allow_multiple)
 
 
 class AllureStepWrapper:
@@ -66,14 +73,16 @@ class AllureStepWrapper:
     created inside its context.
     """
 
-    def __init__(self, title: str) -> None:
+    def __init__(self, title: str, allow_multiple: bool = False) -> None:
         """
         Initialize the wrapper.
 
         Args:
             title: Step title
+            allow_multiple: Allow multiple overrides in single context (default: False)
         """
         self.desc = title
+        self.allow_multiple = allow_multiple
         self.step_context = None
 
     def __call__(self, func: Callable) -> Callable:
@@ -122,6 +131,11 @@ class AllureStepWrapper:
 
         # Override the step title
         external_context["title"] = step_title
+
+        # Disable further overrides if allow_multiple is False
+        if not external_context.get("allow_multiple", False):
+            external_context["can_override"] = False
+
         return True
 
     def __enter__(self) -> Any:
@@ -141,6 +155,7 @@ class AllureStepWrapper:
         _active_step_contexts[thread_id] = {
             "title": self.desc,
             "can_override": True,
+            "allow_multiple": self.allow_multiple,
             "context": None,
         }
 
@@ -166,8 +181,12 @@ class AllureStepWrapper:
         if not external_context or not external_context.get("can_override"):
             return False
 
-        # Override the title of the existing context
+        # Always override if can_override is True
         external_context["title"] = self.desc
+
+        # Disable further overrides if allow_multiple is False
+        if not external_context.get("allow_multiple", False):
+            external_context["can_override"] = False
 
         # Store reference to the external context
         self.step_context = external_context["context"]
