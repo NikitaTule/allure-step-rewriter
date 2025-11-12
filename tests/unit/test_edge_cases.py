@@ -32,7 +32,7 @@ class TestEdgeCases:
     def test_unicode_title(self):
         """Test rewrite_step with unicode characters in title."""
 
-        @rewrite_step("Проверка 🎯")
+        @rewrite_step("Test 🎯")
         def func():
             return "unicode"
 
