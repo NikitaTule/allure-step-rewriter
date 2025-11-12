@@ -1,0 +1,31 @@
+# Include ONLY essential files for users
+include README.md
+include LICENSE
+include CHANGELOG.md
+include pyproject.toml
+
+# Include source code
+recursive-include allure_step_rewriter *.py
+
+# Exclude development/configuration files
+exclude MANIFEST.in
+exclude .pre-commit-config.yaml
+exclude CONTRIBUTING.md
+exclude requirements.txt
+exclude requirements-dev.txt
+exclude setup.cfg
+
+# Exclude everything else
+global-exclude *.pyc
+global-exclude __pycache__
+global-exclude .git*
+global-exclude .coverage
+global-exclude *.egg-info
+
+# Exclude directories
+prune tests
+prune examples
+prune .github
+prune htmlcov
+prune dist
+prune build
