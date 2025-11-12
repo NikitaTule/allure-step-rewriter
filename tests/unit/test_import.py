@@ -20,18 +20,19 @@ class TestImport:
     def test_import_error_without_allure(self):
         """Test that import fails with helpful message when allure-pytest is not installed."""
         # Mock the allure module to simulate it not being installed
-        with mock.patch.dict('sys.modules', {'allure': None}):
+        with mock.patch.dict("sys.modules", {"allure": None}):
             # Remove the module from cache if it was already imported
-            if 'allure_step_rewriter' in sys.modules:
-                del sys.modules['allure_step_rewriter']
-            if 'allure_step_rewriter.rewrite_step' in sys.modules:
-                del sys.modules['allure_step_rewriter.rewrite_step']
+            if "allure_step_rewriter" in sys.modules:
+                del sys.modules["allure_step_rewriter"]
+            if "allure_step_rewriter.rewrite_step" in sys.modules:
+                del sys.modules["allure_step_rewriter.rewrite_step"]
 
             # Try to import and expect ImportError
             with pytest.raises(ImportError) as exc_info:
                 # This will trigger the import error check in __init__.py
                 import importlib
-                importlib.import_module('allure_step_rewriter')
+
+                importlib.import_module("allure_step_rewriter")
 
             # Check error message contains helpful instructions
             error_message = str(exc_info.value)
@@ -51,6 +52,6 @@ class TestImport:
         from allure_step_rewriter import __version__
 
         # Should be in format X.Y.Z
-        parts = __version__.split('.')
+        parts = __version__.split(".")
         assert len(parts) == 3
         assert all(part.isdigit() for part in parts)

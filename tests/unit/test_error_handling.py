@@ -70,7 +70,7 @@ class TestErrorHandling:
             return "success"
 
         # Mock allure.step to raise an exception
-        with mock.patch('allure.step') as mock_step:
+        with mock.patch("allure.step") as mock_step:
             mock_step.side_effect = RuntimeError("Step creation failed")
 
             # Should propagate the exception
@@ -97,7 +97,10 @@ class TestErrorHandling:
 
     def test_step_context_cleanup_after_error(self):
         """Test that thread-local context is cleaned up after error."""
-        from allure_step_rewriter.rewrite_step import _active_step_contexts, _current_thread_id
+        from allure_step_rewriter.rewrite_step import (
+            _active_step_contexts,
+            _current_thread_id,
+        )
 
         @rewrite_step("Test")
         def failing():
@@ -114,7 +117,9 @@ class TestErrorHandling:
                 failing()
 
         # After exception, context should be cleaned up
-        assert thread_id not in _active_step_contexts or not _active_step_contexts.get(thread_id)
+        assert thread_id not in _active_step_contexts or not _active_step_contexts.get(
+            thread_id
+        )
 
     def test_decorator_with_exception_in_function(self):
         """Test that decorator properly handles exceptions in wrapped function."""

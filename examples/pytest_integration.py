@@ -14,6 +14,7 @@ from allure_step_rewriter import rewrite_step
 # Fixtures with rewrite_step
 # ==============================================================================
 
+
 @pytest.fixture
 def browser():
     """Fixture that uses rewrite_step."""
@@ -30,6 +31,7 @@ def browser():
 @pytest.fixture
 def authenticated_user(browser):
     """Fixture that depends on another fixture."""
+
     @rewrite_step("Login user")
     def login(username: str, password: str):
         print(f"Logging in: {username}")
@@ -42,6 +44,7 @@ def authenticated_user(browser):
 # ==============================================================================
 # Test with fixtures
 # ==============================================================================
+
 
 def test_with_fixtures(browser, authenticated_user):
     """Test using fixtures with rewrite_step."""
@@ -66,11 +69,15 @@ def test_with_fixtures(browser, authenticated_user):
 # Parametrized tests
 # ==============================================================================
 
-@pytest.mark.parametrize("username,expected_role", [
-    ("admin", "administrator"),
-    ("user", "regular"),
-    ("guest", "visitor"),
-])
+
+@pytest.mark.parametrize(
+    "username,expected_role",
+    [
+        ("admin", "administrator"),
+        ("user", "regular"),
+        ("guest", "visitor"),
+    ],
+)
 def test_parametrized_with_rewrite_step(username, expected_role):
     """Parametrized test with rewrite_step."""
 
@@ -93,6 +100,7 @@ def test_parametrized_with_rewrite_step(username, expected_role):
 # ==============================================================================
 # Pytest markers with rewrite_step
 # ==============================================================================
+
 
 @pytest.mark.smoke
 @pytest.mark.critical
@@ -119,6 +127,7 @@ def test_with_markers_and_allure():
 # ==============================================================================
 # Using rewrite_step in conftest-like setup
 # ==============================================================================
+
 
 @pytest.fixture(scope="session")
 def test_environment():
@@ -157,6 +166,7 @@ def test_using_session_fixture(test_environment):
 # Combining with pytest.raises
 # ==============================================================================
 
+
 def test_with_exception_handling():
     """Test error handling with rewrite_step."""
 
@@ -172,6 +182,7 @@ def test_with_exception_handling():
 # ==============================================================================
 # Pytest xfail and skip with rewrite_step
 # ==============================================================================
+
 
 @pytest.mark.xfail(reason="Known bug in API")
 def test_xfail_with_rewrite_step():
@@ -202,6 +213,7 @@ def test_skip_with_rewrite_step():
 # Pytest subtests (if available)
 # ==============================================================================
 
+
 def test_with_subtests():
     """Test using subtests pattern with rewrite_step."""
 
@@ -224,6 +236,7 @@ def test_with_subtests():
 # ==============================================================================
 # Real-world pytest integration example
 # ==============================================================================
+
 
 class TestUserAPI:
     """Test class demonstrating real-world usage."""

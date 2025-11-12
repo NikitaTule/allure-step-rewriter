@@ -173,7 +173,9 @@ class TestEdgeCases:
             assert thread_id in _active_step_contexts
 
         # Context should be cleaned up after exit
-        assert thread_id not in _active_step_contexts or not _active_step_contexts.get(thread_id)
+        assert thread_id not in _active_step_contexts or not _active_step_contexts.get(
+            thread_id
+        )
 
     def test_step_context_attribute(self):
         """Test step_context attribute is set correctly."""
