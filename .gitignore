@@ -1,0 +1,96 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+coverage.json
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+allure-results/
+allure-report/
+allure-*/
+
+# Test files in root (should be in tests/ directory)
+/test_*.py
+/analyze_*.py
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Ruff
+.ruff_cache/
+
+# Environments
+.env
+
+# Internal documentation (not for public repo)
+ARCHITECTURE_PROPOSAL.md
+CHANGELOG_MULTIPLE_OVERRIDES.md
+PUBLISHING_GUIDE.md
+RELEASE_CHECKLIST.md
+SOLUTION_ANALYSIS.md
+PUBLISH_INSTRUCTIONS.md
+QUICK_PUBLISH_GUIDE.md
+test_exact_scenario.py
+test_nesting_scenarios.py
+test_real_structure.py
+
+# Git configuration (local only)
+.gitignoreFILES_ANALYSIS.md
